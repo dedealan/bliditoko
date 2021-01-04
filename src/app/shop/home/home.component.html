@@ -1,0 +1,42 @@
+<section class="section" id="productSection">
+  <div class="container" id="productContainer">
+    <div *ngIf="products.length > 0" class="columns is-multiline is-mobile">
+      <div
+        *ngFor="let product of products"
+        class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop"
+      >
+        <div class="item-badge">
+          <div
+            [routerLink]="['/', product.id, product.url]"
+            class="card clickable"
+          >
+            <div class="card-image">
+              <figure class="image is-square">
+                <img [src]="product.images[0] ? product.images[0] : '/assets/images/no-image.png'" [alt]="product.name" />
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="content">
+                <div class="shr-2">{{ product.name }}</div>
+                <div>
+                  <strong>{{
+                    product.price | currency: "Rp":"symbol":"1.0-0"
+                  }}</strong>
+                </div>
+                <div>
+                  <span class="icon star"><i class="fas fa-star"></i></span>{{ product.rating.average_rate }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fav-badge">
+            <span class="icon clickable">
+              <i class="far fa-heart"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

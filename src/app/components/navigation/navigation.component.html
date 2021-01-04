@@ -1,0 +1,82 @@
+<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" routerLink="/">
+      <img
+        src="https://bulma.io/images/bulma-logo.png"
+        width="112"
+        height="28"
+      />
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="toolbar"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="toolbar" class="navbar-menu">
+    <div class="navbar-start">
+      <a routerLink="/home" class="navbar-item"> Home </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a routerLink="/wishlist">
+          <span class="icon">
+            <i class="far fa-heart"></i>
+          </span>
+        </a>
+      </div>
+
+      <div class="navbar-item">
+        <div class="dropdown is-right is-hoverable">
+          <div class="dropdown-trigger">
+            <a routerLink="/cart" aria-haspopup="true" aria-controls="cart">
+              <span class="item-badge">
+                <span class="icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+                <span class="top-badge">
+                  {{ totalQtyDisplay }}
+                </span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-menu" id="cart" role="menu" *ngIf="cartItems.length > 0">
+            <div class="dropdown-content">
+              <div class="dropdown-item" *ngFor="let item of cartItems; index as i">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img [src]="item.image" [alt]="item.name" />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p
+                      class="is-4 clickable shr-1"
+                      [routerLink]="['/', item.id, item.url]"
+                    >
+                      <strong [title]="item.name">{{ item.name }}</strong>
+                    </p>
+                    <p class="is-6">
+                      {{ item.price | currency: "Rp":"symbol":"1.0-0" }} ×
+                      {{ item.qty }}
+                    </p>
+                  </div>
+                </div>
+                <hr class="dropdown-divider" *ngIf="i < (cartItems.length - 1)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

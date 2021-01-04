@@ -1,0 +1,72 @@
+<section class="section cart-section" *ngIf="cartItems.length > 0">
+  <div class="container">
+    <h2>Cart Items</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>All Items</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img [src]="item.image" [alt]="item.name" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p
+                  class="is-4 clickable"
+                  [routerLink]="['/', item.id, item.url]"
+                >
+                  <strong>{{ item.name }}</strong>
+                </p>
+                <p class="is-6">
+                  {{ item.price | currency: "Rp":"symbol":"1.0-0" }} ×
+                  {{ item.qty }}
+                </p>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <input
+              class="input is-small"
+              type="number"
+              min="1"
+              [value]="item.qty"
+              (change)="updateQty(item.id, qty.value)"
+              #qty
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="cart-total-area" *ngIf="cartItems.length > 0">
+  <div class="cart-total">
+    <div class="box">
+      <div class="columns is-mobile">
+        <div class="column is-6">
+          <strong>Total Harga</strong><br>
+          {{ totalPrice | currency: "Rp":"symbol":"1.0-0" }}
+        </div>
+
+        <div class="column is-6 chekout-button">
+          <button class="button is-warning" routerLink="/checkout">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="section cart-section" *ngIf="cartItems.length === 0">
+  <div class="content">
+    Yourt cart is empty.
+  </div>
+</section>

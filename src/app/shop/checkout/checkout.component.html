@@ -1,0 +1,361 @@
+<section class="section">
+  <ul class="steps is-narrow is-medium is-centered has-content-centered">
+    <li
+      class="steps-segment"
+      [ngClass]="{ 'is-active': step === 1, 'has-gaps': step <= 1 }"
+    >
+      <span class="steps-marker" [ngClass]="{ 'is-hollow': step < 1 }">
+        <span class="icon">
+          <i class="fas fa-user"></i>
+        </span>
+      </span>
+      <div class="steps-content">
+        <p class="heading">User Information</p>
+      </div>
+    </li>
+
+    <li
+      class="steps-segment"
+      [ngClass]="{ 'is-active': step === 2, 'has-gaps': step <= 2 }"
+    >
+      <span class="steps-marker" [ngClass]="{ 'is-hollow': step < 2 }">
+        <span class="icon">
+          <i class="fas fa-truck"></i>
+        </span>
+      </span>
+      <div class="steps-content">
+        <p class="heading">Shipping</p>
+      </div>
+    </li>
+
+    <li
+      class="steps-segment"
+      [ngClass]="{ 'is-active': step === 3, 'has-gaps': step <= 3 }"
+    >
+      <span class="steps-marker" [ngClass]="{ 'is-hollow': step < 3 }">
+        <span class="icon">
+          <i class="fas fa-dollar-sign"></i>
+        </span>
+      </span>
+      <div class="steps-content">
+        <p class="heading">Payment</p>
+      </div>
+    </li>
+
+    <li
+      class="steps-segment"
+      [ngClass]="{ 'is-active': step === 4, 'has-gaps': step <= 4 }"
+    >
+      <span class="steps-marker" [ngClass]="{ 'is-hollow': step < 4 }">
+        <span class="icon">
+          <i class="fa fa-check"></i>
+        </span>
+      </span>
+      <div class="steps-content">
+        <p class="heading">Confirmation</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="container" *ngIf="step === 1">
+    <div class="field" *ngIf="isAddressInvalid">
+      <div class="notification is-danger is-light">
+        <button class="delete"></button>
+        Please review your data. Your data may be still incomplete or contain
+        invalid data.
+      </div>
+    </div>
+
+    <form [formGroup]="addresses" (ngSubmit)="next(2)">
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            formControlName="addressee"
+            type="text"
+            placeholder="Addressee"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            formControlName="phone_number"
+            type="text"
+            placeholder="Phone Number (ex. 628xxx)"
+            minlength="10"
+            maxlength="15"
+          />
+          <span class="icon is-small is-left">
+            <i class="fab fa-whatsapp"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <div class="select is-fullwidth">
+            <select
+              formControlName="province_id"
+              (change)="onProvinceChanged(prov.value)"
+              #prov
+            >
+              <option value="">Select Province</option>
+              <option
+                *ngFor="let province of provinces"
+                [value]="province.value"
+                [selected]="province.selected"
+              >
+                {{ province.option }}
+              </option>
+            </select>
+          </div>
+          <div class="icon is-small is-left">
+            <i class="fas fa-university"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <div class="select is-fullwidth">
+            <select
+              formControlName="city_id"
+              (change)="onCityChanged(ct.value)"
+              #ct
+            >
+              <option value="">Select City</option>
+              <option
+                *ngFor="let city of cities"
+                [value]="city.value"
+                [selected]="city.selected"
+              >
+                {{ city.option }}
+              </option>
+            </select>
+          </div>
+          <div class="icon is-small is-left">
+            <i class="fas fas fa-building"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            formControlName="postal_code"
+            type="text"
+            placeholder="Postal Code"
+            minlength="5"
+            maxlength="5"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-at"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <textarea
+            formControlName="address"
+            class="textarea is-small"
+            placeholder="Address"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <button class="button is-success">
+          <span>Continue</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="container" *ngIf="step === 2">
+    <div class="box">
+      <div class="content">
+        <strong>{{ addresses.get("addressee").value }}</strong
+        ><br />
+        {{ addresses.get("phone_number").value }}
+        <p>
+          {{ addresses.get("address").value }},
+          {{ addresses.get("city").value }},
+          {{ addresses.get("province").value }},
+          {{ addresses.get("postal_code").value }}
+        </p>
+      </div>
+    </div>
+
+    <div class="box">
+      <strong>Select Shipping</strong>
+      <div class="control is-expanded has-icons-left">
+        <div class="select is-fullwidth">
+          <select (change)="selectShipping(shp.value)" #shp>
+            <option value="">Select Shipping</option>
+            <option
+              *ngFor="let shipping of shippings"
+              [value]="shipping.name + '|' + shipping.cost"
+              [selected]="
+                shipping.name + '|' + shipping.cost ===
+                shippingCourier + '|' + shippingCost
+              "
+            >
+              {{ shipping.name }} -
+              {{ shipping.cost | currency: "Rp":"symbol":"1.0-0" }}
+            </option>
+          </select>
+        </div>
+
+        <div class="icon is-small is-left">
+          <i class="fas fa-truck"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="is-flex">
+      <button class="button is-success" (click)="back()">
+        <span>Back</span>
+      </button>
+
+      <span class="spacer"></span>
+
+      <button class="button is-success" (click)="next(3)">
+        <span>Continue</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="step === 3">
+    <div class="box">
+      <strong>Select Payment Method</strong>
+      <div class="control" *ngFor="let bank of banks">
+        <label class="radio">
+          <input
+            type="radio"
+            [value]="bank"
+            [checked]="bank === selectedBank"
+            (click)="selectBank(bnk.value)"
+            #bnk
+            name="answer"
+          />
+          {{ bank }}
+        </label>
+      </div>
+    </div>
+
+    <div class="is-flex">
+      <button class="button is-success" (click)="back()">
+        <span>Back</span>
+      </button>
+
+      <span class="spacer"></span>
+
+      <button class="button is-success" (click)="next(4)">
+        <span>Continue</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="step === 4">
+    <div class="content">
+      <h1>Order Confirmation</h1>
+      <div class="box">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Item Purchase</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td>
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img [src]="item.image" [alt]="item.name" />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p
+                      class="is-4 clickable"
+                      [routerLink]="['/', item.id, item.url]"
+                    >
+                      <strong>{{ item.name }}</strong>
+                    </p>
+                    <p class="is-6">
+                      {{ item.price | currency: "Rp":"symbol":"1.0-0" }} ×
+                      {{ item.qty }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <strong>{{
+                  item.price * item.qty | currency: "Rp":"symbol":"1.0-0"
+                }}</strong>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th>{{ totalPrice | currency: "Rp":"symbol":"1.0-0" }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="box">
+        <div>
+          <strong>Sent to:</strong><br />
+          <p>
+            <strong>{{ addresses.get("addressee").value }}</strong
+            ><br />
+            {{ addresses.get("phone_number").value }}<br />
+            {{ addresses.get("address").value }},
+            {{ addresses.get("city").value }},
+            {{ addresses.get("province").value }},
+            {{ addresses.get("postal_code").value }}
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <strong>Shipping cost:</strong><br />
+            {{ shippingCost | currency: "Rp":"symbol":"1.0-0" }} -
+            {{ shippingCourier }}
+          </p>
+        </div>
+
+        <div>
+          <p>
+            <strong>Payment Method:</strong><br />
+            Transfer Bank <strong>{{ selectedBank }}</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="is-flex">
+      <button class="button is-success" (click)="back()">
+        <span>Back</span>
+      </button>
+
+      <span class="spacer"></span>
+
+      <button class="button is-success">
+        <span>Place Order</span>
+      </button>
+    </div>
+  </div>
+</section>

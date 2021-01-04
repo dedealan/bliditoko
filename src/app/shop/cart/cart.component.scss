@@ -1,0 +1,23 @@
+.cart-section {
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 5.5rem;
+}
+
+.cart-total-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-total {
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  width: 90%;
+}
+
+.chekout-button {
+  text-align: right;
+}
