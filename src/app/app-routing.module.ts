@@ -9,6 +9,8 @@ import { WishlistComponent } from './shop/wishlist/wishlist.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 
+import { AuthGuard } from './services/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -29,11 +31,13 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    component: CheckoutComponent
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'wishlist',
-    component: WishlistComponent
+    component: WishlistComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -47,6 +51,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

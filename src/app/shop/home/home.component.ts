@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
+
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -20,7 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private title: Title, private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Home');
+    this.title.setTitle('Home | ' + environment.appTitle);
     this.getProducts();
     window.addEventListener('scroll', this.scroll, true);
   }

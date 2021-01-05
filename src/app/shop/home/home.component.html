@@ -1,6 +1,6 @@
-<section class="section" id="productSection">
+<section class="section" id="productSection" *ngIf="products.length > 0">
   <div class="container" id="productContainer">
-    <div *ngIf="products.length > 0" class="columns is-multiline is-mobile">
+    <div class="columns is-multiline is-mobile">
       <div
         *ngFor="let product of products"
         class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop"
@@ -40,3 +40,11 @@
     </div>
   </div>
 </section>
+
+<div class="container" *ngIf="isLoading" [ngClass]="{'full-height': products.length === 0}">
+  <div
+    class="is-flex is-align-items-center is-justify-content-center" [ngClass]="{'full-height': products.length === 0}"
+  >
+  <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
+</div>

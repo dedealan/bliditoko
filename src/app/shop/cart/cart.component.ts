@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { CheckoutService, Cart } from 'src/app/services/checkout.service';
 
@@ -18,7 +19,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(private checkoutService: CheckoutService, private title: Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Cart');
+    this.title.setTitle('Cart | ' + environment.appTitle);
 
     this.cartItems = this.checkoutService.getCartItems();
     this.getTotal();

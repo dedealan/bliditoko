@@ -1,1 +1,93 @@
-<p>register works!</p>
+<div class="container auth-form">
+  <div
+    class="is-flex is-align-items-center is-justify-content-center auth-form"
+  >
+    <div class="box">
+      <form #login="ngForm">
+        <div class="field">
+          <label class="label">Username</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="username"
+              type="text"
+              placeholder="Username"
+              ngModel
+              #username="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="email"
+              type="email"
+              placeholder="Email"
+              ngModel
+              #email="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="password"
+              type="password"
+              ngModel
+              placeholder="Password"
+              #password="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Confirm Password</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="confirmPassword"
+              type="password"
+              ngModel
+              placeholder="Confirm Password"
+              #confirmPassword="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button class="button is-success">Register</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <p>
+            <a routerLink="/login">Already have account?</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

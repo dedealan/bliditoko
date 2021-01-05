@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Cart, CheckoutService } from 'src/app/services/checkout.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +16,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
   totalQtyDisplay: string = '0';
   private cartItemSub: Subscription;
 
-  constructor(private checkoutService: CheckoutService) { }
+  userAuthenticated: boolean = false;
+  private authStatusSub: Subscription;
+
+  constructor(private checkoutService: CheckoutService, private authService: AuthService) { }
 
   ngOnInit(): void {
     document.addEventListener('DOMContentLoaded', this.togleButton);
@@ -26,6 +30,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.cartItemSub = this.checkoutService.getUpdatedCart().subscribe((items) => {
       this.cartItems = items;
       this.getTotalQty();
+    });
+
+    this.userAuthenticated = this.authService.isAuth();
+
+    this.authStatusSub = this.authService.getAuthStatus().subscribe(isAuth => {
+      this.userAuthenticated = isAuth;
     });
   }
 
@@ -45,8 +55,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-
 
   /**
    * Update total quantity in cart
@@ -71,8 +79,16 @@ export class NavigationComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Logout from app
+   */
+  logout() {
+    this.authService.logout();
+  }
+
   ngOnDestroy(): void {
     this.cartItemSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
     document.removeEventListener('DOMContentLoaded', this.togleButton);
   }
 

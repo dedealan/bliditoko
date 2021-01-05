@@ -77,6 +77,14 @@
           </div>
         </div>
       </div>
+
+      <div class="navbar-item" *ngIf="userAuthenticated">
+        <button (click)="logout()" type="button" class="button is-danger">Logout</button>
+      </div>
+
+      <div class="navbar-item" *ngIf="!userAuthenticated">
+        <button routerLink="/login" type="button" class="button is-info">Login</button>
+      </div>
     </div>
   </div>
 </nav>

@@ -1,1 +1,59 @@
-<p>login works!</p>
+<div class="container auth-form">
+  <div
+    class="is-flex is-align-items-center is-justify-content-center auth-form"
+  >
+    <div class="box">
+      <form (submit)="onLogin(login)" #login="ngForm">
+        <div class="field">
+          <label class="label">Username</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="username"
+              type="text"
+              placeholder="Username"
+              ngModel
+              #username="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-user"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="password"
+              type="password"
+              ngModel
+              placeholder="Password"
+              #password="ngModel"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <button class="button is-success" [ngClass]="{'is-loading': isLoading}" [disabled]="isLoading">Login</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <p>
+            <a href="#">Forgot password?</a><br />
+            <a routerLink="/register">Create an account.</a>
+          </p>
+          <p>Username: <strong>demo</strong> | Password: <strong>demo</strong></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

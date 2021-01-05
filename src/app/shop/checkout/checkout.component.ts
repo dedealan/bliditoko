@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { CheckoutService, Cart } from 'src/app/services/checkout.service';
 
@@ -43,7 +44,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(private checkoutService: CheckoutService, private title: Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Checkout');
+    this.title.setTitle('Checkout | ' + environment.appTitle);
 
     this.step = 1;
     document.addEventListener('DOMContentLoaded', this.closeNotification);
